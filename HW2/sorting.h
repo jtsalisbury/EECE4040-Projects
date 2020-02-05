@@ -4,8 +4,6 @@
 #define SORTING_API __declspec(dllimport)
 #endif
 
-#include <vector>
-
 class SORTING_API SortMenu 
 {
 public:
