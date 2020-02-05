@@ -68,7 +68,7 @@ void SortHandler::mergeSort(int* arr, int threshold, int first, int last, int& c
 	else if (first < last) {
 		comparison++;
 
-		int mid = (last + first) / 2;
+		int mid = first + (last - first) / 2;
 
 		mergeSort(arr, threshold, first, mid, comparison, thresholdComparisons);
 		mergeSort(arr, threshold, mid + 1, last, comparison, thresholdComparisons);
