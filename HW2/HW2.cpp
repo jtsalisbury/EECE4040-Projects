@@ -20,6 +20,7 @@ int main() {
     while (true) {
         system("cls");
         mode = 'n';
+        display = 'n';
 
         cout << "This program allows you to use compare mergesort and quicksort." << endl
              << "You will be asked to provide a threshold value and the size of a list. If the size is greater than 15, the list will be auto randomized." << endl
@@ -73,29 +74,35 @@ int main() {
         }
 
         // todo 
-        int mergeComps, quickComps;
-        SortHandler.mergeSort(mergeSortArr, threshold, 0, size - 1, mergeComps);
-        SortHandler.quickSort(quickSortArr, threshold, 0, size - 1, quickComps);
+        int mergeComps = 0;
+        int quickComps = 0;
+        int mergeThreshComps = 0;
+        int quickThreshComps = 0;
+        SortHandler.mergeSort(mergeSortArr, threshold, 0, size - 1, mergeComps, mergeThreshComps);
+        SortHandler.quickSort(quickSortArr, threshold, 0, size - 1, quickComps, quickThreshComps);
 
         string unsortedStr, mergeSortStr, quickSortStr;
-        if (size <= 15 && display == 'y') {
+        if (display == 'y') {
             for (int i = 0; i < size; i++) {
-                unsortedStr += " " + unsortedArr[i];
-                mergeSortStr += " " + mergeSortStr[i];
-                quickSortStr += " " + quickSortStr[i];
+                unsortedStr += " " + to_string(unsortedArr[i]);
+                mergeSortStr += " " + to_string(mergeSortArr[i]);
+                quickSortStr += " " + to_string(quickSortArr[i]);
             }
 
-            unsortedStr = unsortedStr.substr(1, unsortedStr.length());
-            mergeSortStr = mergeSortStr.substr(1, mergeSortStr.length());
-            quickSortStr = quickSortStr.substr(1, quickSortStr.length());
+            unsortedStr = unsortedStr.erase(0, 1);
+            mergeSortStr = mergeSortStr.erase(0, 1);
+            quickSortStr = quickSortStr.erase(0, 1);
 
             cout << "Unsorted array: " << unsortedStr << endl;
             cout << "Merge-sorted array: " << mergeSortStr << endl;
             cout << "Quick-sorted array: " << quickSortStr << endl;
         }
 
-        cout << "Mergesort comparisons: " << mergeComps << endl;
-        cout << "Quicksort comparisons: " << quickComps << endl;
+        cout << "Mergesort comparisons: " << to_string(mergeComps) << endl;
+        cout << "Mergesort threshold comparisons: " << to_string(mergeThreshComps) << endl;
+
+        cout << "Quicksort comparisons: " << to_string(quickComps) << endl;
+        cout << "Quicksort threshold comparisons: " << to_string(quickThreshComps) << endl;
 
         char notDone;
         cout << "Would you like run this again (y/n)? ";

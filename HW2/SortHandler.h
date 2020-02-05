@@ -7,12 +7,12 @@
 class SORTING_API SortHandler
 {
 public:
-	int insertionSort(int* arr, int threshold, const int len, int& comparison);
+	void insertionSort(int* arr, const int len, int& comparison);
 
 	void merge(int* arr, int threshold, int first, int mid, int last, int& comparison);
-	int mergeSort(int* arr, int threshold, int first, int last, int& comparison);
+	void mergeSort(int* arr, int threshold, int first, int last, int& comparison, int& thresholdComparisons);
 
 	int quick(int* arr, int first, int last, int& comparison);
-	int quickSort(int* arr, int threshold, int first, int last, int& comparison);
+	void quickSort(int* arr, int threshold, int first, int last, int& comparison, int& thresholdComparisons);
 };
 
