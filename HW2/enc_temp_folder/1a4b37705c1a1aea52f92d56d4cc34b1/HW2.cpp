@@ -15,7 +15,7 @@ int main() {
 
     // Declare variables
     int threshold, size;
-    char mode, displayArr, displayComp;
+    char mode, display;
     string strList;
     SortHandler SortHandler;
 
@@ -23,8 +23,7 @@ int main() {
         // Clear console and set defaults
         system("cls");
         mode = 'n';
-        displayArr = 'n';
-        displayComp = 'n';
+        display = 'n';
 
         // Begin outputting the menu and documentation for use
         cout << "This program allows you to use compare mergesort and quicksort." << endl
@@ -42,11 +41,8 @@ int main() {
             cin >> mode;
 
             cout << "Would you like to display both the sorted and unsorted lists (y/n)? ";
-            cin >> displayArr;
+            cin >> display;
         }
-
-        cout << "Would you like to display the number of comparisons (y/n)? ";
-        cin >> displayComp;
 
         cout << endl;
         
@@ -94,8 +90,8 @@ int main() {
 
         string unsortedStr, mergeSortStr, quickSortStr;
 
-        // If we want to displayArr the lists, go ahead and do it!
-        if (displayArr == 'y') {
+        // If we want to display the lists, go ahead and do it!
+        if (display == 'y') {
             // Construct array strings
             for (int i = 0; i < size; i++) {
                 unsortedStr += " " + to_string(unsortedArr[i]);
@@ -114,14 +110,12 @@ int main() {
             cout << "Quick-sorted array: " << quickSortStr << endl;
         }
 
-        if (displayComp == 'y') {
-            // Output the comparison counts for each sorting algorithm
-            cout << "Mergesort comparisons: " << to_string(mergeComps) << endl;
-            cout << "Mergesort threshold comparisons: " << to_string(mergeThreshComps) << endl;
+        // Output the comparison counts for each sorting algorithm
+        cout << "Mergesort comparisons: " << to_string(mergeComps) << endl;
+        cout << "Mergesort threshold comparisons: " << to_string(mergeThreshComps) << endl;
 
-            cout << "Quicksort comparisons: " << to_string(quickComps) << endl;
-            cout << "Quicksort threshold comparisons: " << to_string(quickThreshComps) << endl;
-        }
+        cout << "Quicksort comparisons: " << to_string(quickComps) << endl;
+        cout << "Quicksort threshold comparisons: " << to_string(quickThreshComps) << endl;
 
         // Since we create new arrays dynamically, we have to delete the memory space
         delete[] unsortedArr;
