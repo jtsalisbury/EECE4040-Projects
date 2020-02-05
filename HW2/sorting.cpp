@@ -1,6 +1,5 @@
 #include "sorting.h"
 #include <iostream>
-#include <chrono>
 
 //insertion sort implementation
 int SortMenu::insertionSort(int* arr, int threshold, const int len, int& comparison)
@@ -12,6 +11,7 @@ int SortMenu::insertionSort(int* arr, int threshold, const int len, int& compari
 
 		while (loc >= 0 && arr[loc - 1] > next) 
 		{
+			comparison++;
 			arr[loc + 1] = arr[loc];
 			loc--;
 		}
@@ -39,31 +39,40 @@ void SortMenu::merge(int* arr, int threshold, int first, int mid, int last, int&
 	int last2 = last;
 
 	int i = first1;
-	while ((first1 <= last1) && (first2 <= last2)) {
-		if (arr[first1] <= arr[first2]) {
+	while ((first1 <= last1) && (first2 <= last2)) 
+	{
+		comparison++;
+		if (arr[first1] <= arr[first2]) 
+		{
 			temp[i] = arr[first1];
 			first1++;
 		}
-		else {
+		else 
+		{
 			temp[i] = arr[first2];
 			first2++;
 		}
 		i++;
 	}
 
-	while (first1 <= last1) {
+	while (first1 <= last1) 
+	{
+		comparison++;
 		temp[i] = arr[first1];
 		first1++;
 		i++;
 	}
 
-	while (first2 <= last2) {
+	while (first2 <= last2) 
+	{
+		comparison++;
 		temp[i] = arr[first2];
 		first2++;
 		i++;
 	}
 
-	for (i = first; i <= last; i++) {
+	for (i = first; i <= last; i++) 
+	{
 		arr[i] = temp[i];
 	}
 }
@@ -89,13 +98,16 @@ int SortMenu::mergeSort(int* arr, int threshold, int first, int last, int& compa
 }
 
 //helper function for quick sort 
-int SortMenu::quick(int* arr, int first, int last) {
+int SortMenu::quick(int* arr, int first, int last, int& comparison) {
 	int pi = arr[last];
 	int i = (first - 1);
 	int t;
 
-	for (int j = first; j <= last - 1; j++) {
-		if (arr[j] <= pi) {
+	for (int j = first; j <= last - 1; j++) 
+	{
+		comparison++;
+		if (arr[j] <= pi) 
+		{
 			i++;
 
 			t = arr[i];
@@ -115,7 +127,7 @@ int SortMenu::quickSort(int* arr, int threshold, int first, int last, int& compa
 {
 	if (first < last) 
 	{
-		int pivot = quick(arr, first, last);
+		int pivot = quick(arr, first, last, comparison);
 
 		quickSort(arr, threshold, first, pivot - 1, comparison);
 		quickSort(arr, threshold, pivot + 1, last, comparison);
