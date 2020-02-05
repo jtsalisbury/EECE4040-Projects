@@ -1,1 +1,130 @@
 #include "sorting.h"
+#include <iostream>
+#include <chrono>
+
+//insertion sort implementation
+int SortMenu::insertionSort(int* arr, int threshold, const int len, int& comparison)
+{
+	for (int i = 1; i < len; i++) 
+	{
+		int next = arr[i];
+		int loc = i - 1;
+
+		while (loc >= 0 && arr[loc - 1] > next) 
+		{
+			arr[loc + 1] = arr[loc];
+			loc--;
+		}
+
+		arr[loc + 1] = next;
+	}
+	
+	for (int i = 0; i < len; i++)
+	{
+		std::cout << arr[i] << std::endl;
+	}
+
+	return 0;
+}
+
+//helper function for merge 
+void SortMenu::merge(int* arr, int threshold, int first, int mid, int last, int& comparison)
+{
+	int temp[25000];
+
+	int first1 = first;
+	int last1 = mid;
+
+	int first2 = mid + 1;
+	int last2 = last;
+
+	int i = first1;
+	while ((first1 <= last1) && (first2 <= last2)) {
+		if (arr[first1] <= arr[first2]) {
+			temp[i] = arr[first1];
+			first1++;
+		}
+		else {
+			temp[i] = arr[first2];
+			first2++;
+		}
+		i++;
+	}
+
+	while (first1 <= last1) {
+		temp[i] = arr[first1];
+		first1++;
+		i++;
+	}
+
+	while (first2 <= last2) {
+		temp[i] = arr[first2];
+		first2++;
+		i++;
+	}
+
+	for (i = first; i <= last; i++) {
+		arr[i] = temp[i];
+	}
+}
+
+//mergesort implementation 
+int SortMenu::mergeSort(int* arr, int threshold, int first, int last, int& comparison) {
+	if (first < last) {
+
+		int mid = first + (last - first) / 2;
+
+		mergeSort(arr, threshold, first, mid, comparison);
+		mergeSort(arr, threshold, mid + 1, last, comparison);
+
+		merge(arr, threshold, first, mid, last, comparison);
+
+		for (int i = 0; i < last; i++)
+		{
+			std::cout << arr[i] << std::endl;
+		}
+
+		return 0;
+	}
+}
+
+//helper function for quick sort 
+int SortMenu::quick(int* arr, int first, int last) {
+	int pi = arr[last];
+	int i = (first - 1);
+	int t;
+
+	for (int j = first; j <= last - 1; j++) {
+		if (arr[j] <= pi) {
+			i++;
+
+			t = arr[i];
+			arr[i] = arr[j];
+			arr[j] = t;
+		}
+	}
+
+	t = arr[i + 1];
+	arr[i + 1] = arr[last];
+	arr[last] = t;
+	return (i + 1);
+}
+
+//quicksort implementation
+int SortMenu::quickSort(int* arr, int threshold, int first, int last, int& comparison)
+{
+	if (first < last) 
+	{
+		int pivot = quick(arr, first, last);
+
+		quickSort(arr, threshold, first, pivot - 1, comparison);
+		quickSort(arr, threshold, pivot + 1, last, comparison);
+
+		for (int i = 0; i < last; i++)
+		{
+			std::cout << arr[i] << std::endl;
+		}
+
+		return 0;
+	}
+}
