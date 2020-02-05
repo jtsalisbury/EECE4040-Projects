@@ -29,7 +29,7 @@ void SortHandler::merge(int* arr, int threshold, int first, int mid, int last, i
 
 	int i = first1;
 	while ((first1 <= last1) && (first2 <= last2)) {
-		comparison += 3;
+		comparison++;
 		if (arr[first1] <= arr[first2]) {
 			temp[i] = arr[first1];
 			first1++;
