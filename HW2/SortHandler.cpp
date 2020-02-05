@@ -18,11 +18,6 @@ int SortHandler::insertionSort(int* arr, int threshold, const int len, int& comp
 
 		arr[loc + 1] = next;
 	}
-	
-	for (int i = 0; i < len; i++)
-	{
-		std::cout << arr[i] << std::endl;
-	}
 
 	return 0;
 }
@@ -88,11 +83,6 @@ int SortHandler::mergeSort(int* arr, int threshold, int first, int last, int& co
 
 		merge(arr, threshold, first, mid, last, comparison);
 
-		for (int i = 0; i < last; i++)
-		{
-			std::cout << arr[i] << std::endl;
-		}
-
 		return 0;
 	}
 }
@@ -131,11 +121,6 @@ int SortHandler::quickSort(int* arr, int threshold, int first, int last, int& co
 
 		quickSort(arr, threshold, first, pivot - 1, comparison);
 		quickSort(arr, threshold, pivot + 1, last, comparison);
-
-		for (int i = 0; i < last; i++)
-		{
-			std::cout << arr[i] << std::endl;
-		}
 
 		return 0;
 	}

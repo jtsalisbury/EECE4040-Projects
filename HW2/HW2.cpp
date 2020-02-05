@@ -78,7 +78,7 @@ int main() {
         SortHandler.quickSort(quickSortArr, threshold, 0, size - 1, quickComps);
 
         string unsortedStr, mergeSortStr, quickSortStr;
-        if (size <= 15 && display == 'n') {
+        if (size <= 15 && display == 'y') {
             for (int i = 0; i < size; i++) {
                 unsortedStr += " " + unsortedArr[i];
                 mergeSortStr += " " + mergeSortStr[i];
