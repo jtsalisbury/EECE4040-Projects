@@ -12,7 +12,7 @@ public:
 	void merge(int* arr, int threshold, int first, int mid, int last, int& comparison);
 	int mergeSort(int* arr, int threshold, int first, int last, int& comparison);
 
-	int quick(int* arr, int first, int last);
+	int quick(int* arr, int first, int last, int& comparison);
 	int quickSort(int* arr, int threshold, int first, int last, int& comparison);
 };
 
