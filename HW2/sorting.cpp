@@ -18,11 +18,6 @@ int SortMenu::insertionSort(int* arr, int threshold, const int len, int& compari
 
 		arr[loc + 1] = next;
 	}
-	
-	for (int i = 0; i < len; i++)
-	{
-		std::cout << arr[i] << std::endl;
-	}
 
 	return 0;
 }
@@ -87,11 +82,6 @@ int SortMenu::mergeSort(int* arr, int threshold, int first, int last, int& compa
 		mergeSort(arr, threshold, mid + 1, last, comparison);
 
 		merge(arr, threshold, first, mid, last, comparison);
-
-		for (int i = 0; i < last; i++)
-		{
-			std::cout << arr[i] << std::endl;
-		}
 
 		return 0;
 	}
