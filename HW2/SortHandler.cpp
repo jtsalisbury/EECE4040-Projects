@@ -7,6 +7,7 @@ void SortHandler::insertionSort(int* arr, const int len, int& comparison) {
 		int next = arr[i];
 		int loc = i - 1;
 
+		//move elements that are greater than next
 		while (loc >= 0 && arr[loc] > next) {
 			comparison++;
 			arr[loc + 1] = arr[loc];
@@ -19,6 +20,7 @@ void SortHandler::insertionSort(int* arr, const int len, int& comparison) {
 
 //helper function for merge 
 void SortHandler::merge(int* arr, int threshold, int first, int mid, int last, int& comparison) {
+	//create temp array
 	int temp[25000];
 
 	int first1 = first;
@@ -28,6 +30,7 @@ void SortHandler::merge(int* arr, int threshold, int first, int mid, int last, i
 	int last2 = last;
 
 	int i = first1;
+	//merge the temp array back into array
 	while ((first1 <= last1) && (first2 <= last2)) {
 		comparison++;
 		if (arr[first1] <= arr[first2]) {
@@ -41,6 +44,7 @@ void SortHandler::merge(int* arr, int threshold, int first, int mid, int last, i
 		i++;
 	}
 
+	//copy the remaining elements
 	while (first1 <= last1) {
 		comparison++;
 		temp[i] = arr[first1];
@@ -68,23 +72,25 @@ void SortHandler::mergeSort(int* arr, int threshold, int first, int last, int& c
 	else if (first < last) {
 		comparison++;
 
-		int mid = (last + first) / 2;
-
+		int mid = first + (last - first) / 2;
+		//sort both halves 
 		mergeSort(arr, threshold, first, mid, comparison, thresholdComparisons);
 		mergeSort(arr, threshold, mid + 1, last, comparison, thresholdComparisons);
-
+		//put them together 
 		merge(arr, threshold, first, mid, last, comparison);
 	}
 }
 
 //helper function for quick sort 
 int SortHandler::quick(int* arr, int first, int last, int& comparison) {
+	//pivot 
 	int pi = arr[last];
 	int i = (first - 1);
 	int t;
 
 	for (int j = first; j <= last - 1; j++)  {
 		comparison++;
+		//if element is smaller than pivot 
 		if (arr[j] <= pi) 
 		{
 			i++;
@@ -108,6 +114,7 @@ void SortHandler::quickSort(int* arr, int threshold, int first, int last, int& c
 	} 
 	else if (first < last) {
 		comparison++;
+		//call quick sort helper to partition the index
 		int pivot = quick(arr, first, last, comparison);
 
 		quickSort(arr, threshold, first, pivot - 1, comparison, thresholdComparisons);
