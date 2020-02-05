@@ -18,12 +18,15 @@
     <ClCompile Include="HW2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sorting.cpp">
+    <ClCompile Include="SortHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sorting.h">
+    <ClInclude Include="SortHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HW2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

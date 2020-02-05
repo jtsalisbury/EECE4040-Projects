@@ -148,10 +148,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="HW2.cpp" />
-    <ClCompile Include="sorting.cpp" />
+    <ClCompile Include="SortHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sorting.h" />
+    <ClInclude Include="HW2.h" />
+    <ClInclude Include="SortHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

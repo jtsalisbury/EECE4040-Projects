@@ -3,8 +3,9 @@
 #include <array>
 #include <iostream>
 #include <string>
-#include "sorting.h"
+#include "SortHandler.h"
 #include <time.h>
+#include "HW2.h"
 
 using namespace std;
 
@@ -14,15 +15,16 @@ int main() {
     int threshold, size;
     char mode, display;
     string strList;
+    SortHandler SortHandler;
 
     while (true) {
         system("cls");
         mode = 'n';
 
         cout << "This program allows you to use compare mergesort and quicksort." << endl
-             << "You will be asked to provide a threshold value and the size of a list to compare. If the size is greater than 15, the list will be auto randomized." << endl
+             << "You will be asked to provide a threshold value and the size of a list. If the size is greater than 15, the list will be auto randomized." << endl
              << "If the size is less than or equal to 15, you can specify to enter in your own values, or to have the list randomized." << endl
-             << "If the size is less than or equal to 15, you may opt to display both the sorted and unsorted lists." << endl;
+             << "If the size is less than or equal to 15, you may opt to display both the sorted and unsorted lists." << endl << endl;
 
         cout << "Please enter the threshold value: ";
         cin >> threshold;
@@ -71,6 +73,37 @@ int main() {
         }
 
         // todo 
+        int mergeComps, quickComps;
+        SortHandler.mergeSort(mergeSortArr, threshold, 0, size - 1, mergeComps);
+        SortHandler.quickSort(quickSortArr, threshold, 0, size - 1, quickComps);
+
+        string unsortedStr, mergeSortStr, quickSortStr;
+        if (size <= 15 && display == 'n') {
+            for (int i = 0; i < size; i++) {
+                unsortedStr += " " + unsortedArr[i];
+                mergeSortStr += " " + mergeSortStr[i];
+                quickSortStr += " " + quickSortStr[i];
+            }
+
+            unsortedStr = unsortedStr.substr(1, unsortedStr.length());
+            mergeSortStr = mergeSortStr.substr(1, mergeSortStr.length());
+            quickSortStr = quickSortStr.substr(1, quickSortStr.length());
+
+            cout << "Unsorted array: " << unsortedStr << endl;
+            cout << "Merge-sorted array: " << mergeSortStr << endl;
+            cout << "Quick-sorted array: " << quickSortStr << endl;
+        }
+
+        cout << "Mergesort comparisons: " << mergeComps << endl;
+        cout << "Quicksort comparisons: " << quickComps << endl;
+
+        char notDone;
+        cout << "Would you like run this again (y/n)? ";
+        cin >> notDone;
+
+        if (notDone == 'n') {
+            break;
+        }
 
         delete[] unsortedArr;
         delete[] mergeSortArr;
