@@ -64,7 +64,7 @@ int main() {
             int num;
 
             while (arrInd < size) {
-                cout << "Please enter the " << (arrInd + 1) << " list value: ";
+                cout << "Please enter list value " << (arrInd + 1) << ": ";
                 cin >> num;
 
                 unsortedArr[arrInd] = num;

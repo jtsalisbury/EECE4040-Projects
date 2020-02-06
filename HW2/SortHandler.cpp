@@ -2,8 +2,8 @@
 #include <iostream>
 
 //insertion sort implementation
-void SortHandler::insertionSort(int* arr, const int len, int& comparison) {
-	for (int i = 1; i < len; i++) {
+void SortHandler::insertionSort(int* arr, int first, int last, int& comparison) {
+	for (int i = first; i <= last; i++) {
 		int next = arr[i];
 		int loc = i - 1;
 
@@ -67,7 +67,7 @@ void SortHandler::merge(int* arr, int threshold, int first, int mid, int last, i
 //mergesort implementation 
 void SortHandler::mergeSort(int* arr, int threshold, int first, int last, int& comparison, int& thresholdComparisons) {
 	if (last - first + 1 <= threshold) {
-		insertionSort(arr, last - first + 1, thresholdComparisons);
+		insertionSort(arr, first, last, thresholdComparisons);
 	}
 	else if (first < last) {
 		comparison++;
@@ -110,7 +110,7 @@ int SortHandler::quick(int* arr, int first, int last, int& comparison) {
 //quicksort implementation
 void SortHandler::quickSort(int* arr, int threshold, int first, int last, int& comparison, int& thresholdComparisons) {
 	if (last - first + 1 <= threshold) {
-		insertionSort(arr, last - first + 1, thresholdComparisons);
+		insertionSort(arr, first, last, thresholdComparisons);
 	} 
 	else if (first < last) {
 		comparison++;

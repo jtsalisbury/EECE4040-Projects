@@ -7,7 +7,7 @@
 class SORTING_API SortHandler
 {
 public:
-	void insertionSort(int* arr, const int len, int& comparison);
+	void insertionSort(int* arr, int first, int last, int& comparison);
 
 	void merge(int* arr, int threshold, int first, int mid, int last, int& comparison);
 	void mergeSort(int* arr, int threshold, int first, int last, int& comparison, int& thresholdComparisons);
