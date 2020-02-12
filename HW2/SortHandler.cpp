@@ -3,6 +3,9 @@
 using namespace std;
 
 //insertion sort implementation
+//Preconditions: Unsorted list that hit the threshold for either mergesort or quicksort, now to be sorted by insertion sort
+//Inputs: List of type array, first int, last int, and address of comparison
+//Postconditions: The list will be sorted by insertion comparisons. Each time there is a comparison, the comparison value will be incremented
 void SortHandler::insertionSort(int* arr, int first, int last, int& comparison) {
 	for (int i = first; i <= last; i++) {
 		int next = arr[i];
@@ -67,6 +70,9 @@ void SortHandler::merge(int* arr, int threshold, int first, int mid, int last, i
 }
 
 //mergesort implementation 
+//Preconditions: An unsorted list of type array
+//Inputs: Unsorted list in type array, threshold value (user input), first int, last in, threshold comparison adresses
+//Postconditions: List will be sorted using mergesort alogrithm, until the list hits the threshold, it which the sorted will be finished by insertion sort
 void SortHandler::mergeSort(int* arr, int threshold, int first, int last, int& merge_comparison, int& thresholdComparisons) {
 	if (last - first + 1 <= threshold) {
 		merge_comparison++;
@@ -112,6 +118,9 @@ int SortHandler::quick(int* arr, int first, int last, int& quick_comparison) {
 }
 
 //quicksort implementation
+//Preconditions: An unsorted list of type array
+//Inputs: Unsorted list in type array, threshold value (user input), first int, last in, threshold comparison adresses
+//Postconditions: List will be sorted using quicksort alogrithm, until the list hits the threshold, it which the sorted will be finished by insertion sort
 void SortHandler::quickSort(int* arr, int threshold, int first, int last, int& quick_comparison, int& thresholdComparisons) {
 	if (last - first + 1 <= threshold) {
 		quick_comparison++;
