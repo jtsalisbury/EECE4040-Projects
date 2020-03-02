@@ -30,5 +30,6 @@ public:
 	void setRight(Person* p);
 	void setParent(Person* p);
 	void setColor(bool c);
+	void setNumber(string n);
 };
 

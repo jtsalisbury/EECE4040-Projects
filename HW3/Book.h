@@ -11,8 +11,7 @@ class Book {
 
 	void EmptyTree(Person* p);
 
-	Person* find(string fname, string lname, Person*& parent);
-	Person* find(string fname, string lname);
+	Person* find(Person* root, string fname, string lname);
 
 	void rotateLeft(Person* pivot);
 	void rotateRight(Person* pivot);
