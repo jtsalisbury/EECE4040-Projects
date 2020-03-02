@@ -71,8 +71,8 @@ void SortHandler::merge(int* arr, int threshold, int first, int mid, int last, i
 
 //mergesort implementation 
 //Preconditions: An unsorted list of type array
-//Inputs: Unsorted list in type array, threshold value (user input), first int, last in, threshold comparison adresses
-//Postconditions: List will be sorted using mergesort alogrithm, until the list hits the threshold, it which the sorted will be finished by insertion sort
+//Inputs: Unsorted list in type array, threshold value (user input), first int, last in, threshold comparison addresses
+//Postconditions: List will be sorted using mergesort algorithm, until the list hits the threshold, it which the sorted will be finished by insertion sort
 void SortHandler::mergeSort(int* arr, int threshold, int first, int last, int& merge_comparison, int& thresholdComparisons) {
 	if (last - first + 1 <= threshold) {
 		merge_comparison++;
@@ -119,7 +119,7 @@ int SortHandler::quick(int* arr, int first, int last, int& quick_comparison) {
 
 //quicksort implementation
 //Preconditions: An unsorted list of type array
-//Inputs: Unsorted list in type array, threshold value (user input), first int, last in, threshold comparison adresses
+//Inputs: Unsorted list in type array, threshold value (user input), first int, last in, threshold comparison addresses
 //Postconditions: List will be sorted using quicksort alogrithm, until the list hits the threshold, it which the sorted will be finished by insertion sort
 void SortHandler::quickSort(int* arr, int threshold, int first, int last, int& quick_comparison, int& thresholdComparisons) {
 	if (last - first + 1 <= threshold) {
