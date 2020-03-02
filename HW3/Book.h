@@ -3,24 +3,27 @@
 #include <string>
 #include "Person.h"
 
+using namespace std;
+
 class Book {
 	Person* m_head;
 	int m_size;
 
-	void EmptyTree(Person* c);
+	void EmptyTree(Person* p);
 
 	Person* find(string fname, string lname, Person*& parent);
-	Person find(string fname, string lname);
-
-
-	void printTree(Person* p, int depth);
+	Person* find(string fname, string lname);
 
 	void rotateLeft(Person* pivot);
 	void rotateRight(Person* pivot);
 
 	void fixViolation(Person* n);
 
-	void inorder(std::vector<string>*, Person* c);
+	void inorder(std::vector<string>* members, Person* c);
+
+	void restoreTree(string path);
+	void saveTree(string path);
+
 
 public:
 	Book();
@@ -28,13 +31,6 @@ public:
 	~Book();
 
 	int size();
-
-	void printTree();
-
-	void saveTree();
-	void restoreTree();
-
-	void save(string filename);
 
 	void EmptyTree();
 
