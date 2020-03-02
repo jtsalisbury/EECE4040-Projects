@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 #include "Person.h"
 
 class Book {
@@ -8,7 +9,9 @@ class Book {
 
 	void EmptyTree(Person* c);
 
-	Person* find(int i, Person*& parent);
+	Person* find(string fname, string lname, Person*& parent);
+	Person find(string fname, string lname);
+
 
 	void printTree(Person* p, int depth);
 
@@ -19,6 +22,7 @@ class Book {
 
 public:
 	Book();
+	Book(string path);
 	~Book();
 
 	int size();
@@ -28,14 +32,15 @@ public:
 	void saveTree();
 	void restoreTree();
 
-	void inorder(std::vector<int>*, Person* c);
+	void save(string filename);
+
+	void inorder(std::vector<string>*, Person* c);
 	void EmptyTree();
-	void insert(int i);
 
-	std::vector<int> GetAllAscending();
-	std::vector<int> GetAllDescending();
+	void insert(string fname, string lname, string number);
+	void remove(string fname, string lname);
+	void change(string fname, string lname, string newNumber);
 
-	Person* Remove(int i);
-	Person* find(int i);
+	string findNumber(string fname, string lname);
 };
 

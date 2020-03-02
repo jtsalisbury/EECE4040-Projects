@@ -1,11 +1,14 @@
 #pragma once
+#include "Book.h"
+#include <map>
+
 class UserInterface {
 	bool m_quit;
 
 public:
 	void printOptions();
-	void executeOption(int optionNum);
-
+	bool validateOption(int option);
+	void executeOption(Book* book, int option);
 	bool shouldQuit();
 };
 
