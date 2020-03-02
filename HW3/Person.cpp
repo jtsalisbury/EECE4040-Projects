@@ -1,14 +1,13 @@
 #include "Person.h"
 #include <iostream>
 
-enum colors
-{
+enum colors {
 	RED,
 	BLACK
 };
 
 //Person Constructor
-Person(std::string m_fname, std::string m_lname, std::string m_phonenumber) {
+Person::Person(string m_fname, string m_lname, string m_phonenumber) {
 	color = RED;
 }
 
@@ -36,14 +35,14 @@ bool Person::getColor() {
 }
 
 
-std::string Person::getFirstName() {
+string Person::getFirstName() {
 	return m_fname;
 }
-std::string Person::getLastName() {
+string Person::getLastName() {
 	return m_lname;
 }
 
-std::string Person::getNumber() {
+string Person::getNumber() {
 	return m_phonenumber;
 }
 
@@ -56,9 +55,13 @@ void Person::setRight(Person* n) {
 }
 
 void Person::setParent(Person* n) {
-	parent = n;
+	m_parent = n;
 }
 
 void Person::setColor(bool c) {
 	color = c;
+}
+
+void Person::setNumber(string num) {
+	m_phonenumber = num;
 }

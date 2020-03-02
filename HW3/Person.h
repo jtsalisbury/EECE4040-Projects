@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+using namespace std;
+
 class Person {
 	Person* m_left = nullptr;
 	Person* m_right = nullptr;
