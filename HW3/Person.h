@@ -13,7 +13,7 @@ class Person {
 	std::string m_phonenumber;
 
 public: 
-	Person();
+	Person(std::string m_fname, std::string m_lname, std::string m_phonenumber);
 	~Person();
 
 	Person* getLeft();
