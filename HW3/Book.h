@@ -20,6 +20,8 @@ class Book {
 
 	void fixViolation(Person* n);
 
+	void inorder(std::vector<string>*, Person* c);
+
 public:
 	Book();
 	Book(string path);
@@ -34,8 +36,9 @@ public:
 
 	void save(string filename);
 
-	void inorder(std::vector<string>*, Person* c);
 	void EmptyTree();
+
+	vector<string> getAllAscending();
 
 	void insert(string fname, string lname, string number);
 	void remove(string fname, string lname);
