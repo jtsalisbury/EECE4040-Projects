@@ -21,7 +21,10 @@ class Book {
 	void rotateLeft(Person* pivot);
 	void rotateRight(Person* pivot);
 
-	void fixViolation(Person* n);
+	Person* getMin(Person* root);
+	void transplant(Person* one, Person* two);
+	void fixInsertViolation(Person* n);
+	void fixDeleteViolation(Person* n);
 
 	void inorder(std::vector<string>* members, Person* c);
 	void preorder(std::vector<string>* members, Person* c);
