@@ -3,7 +3,7 @@
 #include <map>
 
 class UserInterface {
-	bool m_quit;
+	bool m_quit = false;
 
 public:
 	void printOptions();

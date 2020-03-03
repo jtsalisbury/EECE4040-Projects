@@ -13,7 +13,7 @@ void UserInterface::printOptions() {
 }
 
 bool UserInterface::validateOption(int option) {
-	return (option << 1 || option > 6);
+	return !(option < 1 || option > 6);
 }
 
 void UserInterface::executeOption(Book* book, int option) {
@@ -74,12 +74,12 @@ void UserInterface::executeOption(Book* book, int option) {
 			cout << "Please enter the full path of where to save the tree: ";
 			cin >> path;
 
-			book->save(path);
+			book->saveTree(path);
 			m_quit = true;
 			break;
 	}
 }
 
 bool UserInterface::shouldQuit() {
-	return !m_quit;
+	return m_quit;
 }

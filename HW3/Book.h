@@ -11,8 +11,8 @@ using namespace std;
 using std::ofstream;
 
 class Book {
-	Person* m_head;
-	int m_size;
+	Person* m_head = nullptr;
+	int m_size = 0;
 
 	void EmptyTree(Person* p);
 
@@ -30,8 +30,6 @@ class Book {
 	void preorder(std::vector<string>* members, Person* c);
 
 	void restoreTree(string path);
-	void saveTree(string path);
-
 
 public:
 	Book();
@@ -47,6 +45,7 @@ public:
 	void insert(string fname, string lname, string number);
 	void remove(string fname, string lname);
 	void change(string fname, string lname, string newNumber);
+	void saveTree(string path);
 
 	string findNumber(string fname, string lname);
 };

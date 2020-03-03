@@ -24,6 +24,24 @@ int Book::size() {
 	return m_size;
 }
 
+vector<string> split(string s) {
+	vector<string> words;
+	string word = "";
+
+	for (int i = 0; i < s.length(); i++) {
+		if (s[i] == ' ') {
+			words.push_back(word);
+			word = "";
+		} else {
+			word += s[i];
+		}
+	}
+
+	words.push_back(word);
+
+	return words;
+}
+
 void Book::restoreTree(string path) {
 	string info; 
 
@@ -36,10 +54,9 @@ void Book::restoreTree(string path) {
 
 	while (getline(input, info)) {
 		istringstream iss(info);
-		vector<std::string> results((istream_iterator<string>(iss)),
-			istream_iterator<string>());
+		vector<string> words = split(info);
 
-		insert(results[0], results[1], results[3]);
+		insert(words[0], words[1], words[2]);
 	}
 
 	input.close();
@@ -433,6 +450,7 @@ void Book::inorder(vector<string>* members, Person* p) {
 	// Then the current
 	string current;
 	current = (p->getFirstName() + " " + p->getLastName() + " " + p->getNumber());
+	members->push_back(current);
 
 	// Then recursively do the right
 	inorder(members, p->getRight());
@@ -447,6 +465,7 @@ void Book::preorder(vector<string>* members, Person* p) {
 	// Then the current
 	string current;
 	current = (p->getFirstName() + " " + p->getLastName() + " " + p->getNumber());
+	members->push_back(current);
 
 	// Recursively do the left
 	preorder(members, p->getLeft());

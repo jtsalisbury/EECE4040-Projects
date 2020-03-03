@@ -7,7 +7,10 @@ enum colors {
 };
 
 //Person Constructor
-Person::Person(string m_fname, string m_lname, string m_phonenumber) {
+Person::Person(string fname, string lname, string phonenumber) {
+	m_fname = fname;
+	m_lname = lname;
+	m_phonenumber = phonenumber;
 	color = RED;
 }
 
