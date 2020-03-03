@@ -263,3 +263,7 @@ void Book::fixViolation(Person* pivot) {
 void Book::inorder(vector<string>* members, Person* p) {
 
 }
+
+void Book::preorder(vector<string>* members, Person* p) {
+
+}

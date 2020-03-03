@@ -19,6 +19,7 @@ class Book {
 	void fixViolation(Person* n);
 
 	void inorder(std::vector<string>* members, Person* c);
+	void preorder(std::vector<string>* members, Person* c);
 
 	void restoreTree(string path);
 	void saveTree(string path);
