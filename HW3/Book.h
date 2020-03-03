@@ -2,8 +2,13 @@
 #include <vector>
 #include <string>
 #include "Person.h"
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <iterator>
 
 using namespace std;
+using std::ofstream;
 
 class Book {
 	Person* m_head;

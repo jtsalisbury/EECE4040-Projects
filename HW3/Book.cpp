@@ -25,11 +25,42 @@ int Book::size() {
 }
 
 void Book::restoreTree(string path) {
+	string info; 
 
+	ifstream input(path);
+
+	if (!input.is_open()) {
+		cout << "Unable to open file" << endl;
+		return;
+	}
+
+	while (getline(input, info)) {
+		istringstream iss(info);
+		vector<std::string> results((istream_iterator<string>(iss)),
+			istream_iterator<string>());
+
+		insert(results[0], results[1], results[3]);
+	}
+
+	input.close();
 }
 
 void Book::saveTree(string path) {
+	ofstream output;
 
+	output.open(path);
+	if (!output) {
+		return;
+	}
+
+	vector<string> members;
+	preorder(&members, m_head);
+
+	for (int i = 0; i < members.size(); i++) {
+		output << members[i] << endl;
+	}
+
+	output.close();
 }
 
 void Book::EmptyTree() {
