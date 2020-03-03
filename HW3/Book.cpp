@@ -423,9 +423,35 @@ void Book::fixInsertViolation(Person* pivot) {
 }
 
 void Book::inorder(vector<string>* members, Person* p) {
+	if (p == nullptr) {
+		return;
+	}
+	
+	// Recursively do the left
+	inorder(members, p->getLeft());
+
+	// Then the current
+	string current;
+	current = (p->getFirstName() + " " + p->getLastName() + " " + p->getNumber());
+
+	// Then recursively do the right
+	inorder(members, p->getRight());
 
 }
 
 void Book::preorder(vector<string>* members, Person* p) {
+	if (p == nullptr) {
+		return;
+	}
+
+	// Then the current
+	string current;
+	current = (p->getFirstName() + " " + p->getLastName() + " " + p->getNumber());
+
+	// Recursively do the left
+	preorder(members, p->getLeft());
+
+	// Then recursively do the right
+	preorder(members, p->getRight());
 
 }
