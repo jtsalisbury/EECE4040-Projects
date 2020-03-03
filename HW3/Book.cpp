@@ -25,42 +25,11 @@ int Book::size() {
 }
 
 void Book::restoreTree(string path) {
-	string info; 
 
-	ifstream input(path);
-
-	if (!input.is_open()) {
-		cout << "Unable to open file" << endl;
-		return;
-	}
-
-	while (getline(input, info)) {
-		istringstream iss(info);
-		vector<std::string> results((istream_iterator<string>(iss)),
-			istream_iterator<string>());
-
-		insert(results[0], results[1], results[3]);
-	}
-
-	input.close();
 }
 
 void Book::saveTree(string path) {
-	ofstream output;
 
-	output.open(path);
-	if (!output) {
-		return;
-	}
-
-	vector<string> members;
-	preorder(&members, m_head);
-
-	for (int i = 0; i < members.size(); i++) {
-		output << members[i] << endl;
-	}
-
-	output.close();
 }
 
 void Book::EmptyTree() {
@@ -293,8 +262,37 @@ void Book::fixViolation(Person* pivot) {
 
 void Book::inorder(vector<string>* members, Person* p) {
 
+	if (p == nullptr) {
+		return;
+	}
+	
+	// Recursively do the left
+	inorder(members, p->getLeft());
+
+	// Then the current
+	string current;
+	current = (p->getFirstName() + " " + p->getLastName() + " " + p->getNumber());
+
+	// Then recursively do the right
+	inorder(members, p->getRight());
+
 }
 
 void Book::preorder(vector<string>* members, Person* p) {
+
+	if (p == nullptr) {
+		return;
+	}
+
+	// Then the current
+	string current;
+	current = (p->getFirstName() + " " + p->getLastName() + " " + p->getNumber());
+
+	// Recursively do the left
+	preorder(members, p->getLeft());
+
+	// Then recursively do the right
+	preorder(members, p->getRight());
+
 
 }
