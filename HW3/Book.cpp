@@ -182,12 +182,18 @@ void Book::transplant(Person* one, Person* two) {
 		one->getParent()->setRight(two);
 	}
 
-	two->setParent(one->getParent());
+	if (two != nullptr) {
+		two->setParent(one->getParent());
+	}
 }
 
 // TODO
 void Book::remove(string fname, string lname) {
 	Person* node = find(m_head, fname, lname);
+
+	if (node == nullptr) {
+		return;
+	}
 
 	Person* x;
 	Person* y;
