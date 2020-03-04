@@ -4,7 +4,7 @@
 using namespace std;
 
 void UserInterface::printOptions() {
-	cout << "1. Add a new person" << endl <<
+	cout << endl << "1. Add a new person" << endl <<
 		"2. Delete a person" << endl <<
 		"3. Find a phone number" << endl <<
 		"4. Change someone's phone number" << endl <<
@@ -50,7 +50,7 @@ void UserInterface::executeOption(Book* book, int option) {
 			cin >> lname;
 
 			number = book->findNumber(fname, lname);
-			cout << fname << ' ' << lname << "'s number: " << number;
+			cout << endl << fname << ' ' << lname << "'s number: " << number;
 			break;
 		case 4: 
 			cout << "Please enter the person's first name: ";
@@ -66,6 +66,7 @@ void UserInterface::executeOption(Book* book, int option) {
 			break;
 		case 5: 
 			members = book->getAllAscending();
+			cout << endl << "Phonebook Members:" << endl;
 			for (int i = 0; i < members.size(); i++) {
 				cout << members[i] << endl;
 			}

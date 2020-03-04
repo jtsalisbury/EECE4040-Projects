@@ -6,7 +6,6 @@ Person::Person(string fname, string lname, string phonenumber) {
 	m_fname = fname;
 	m_lname = lname;
 	m_phonenumber = phonenumber;
-	color = RED;
 }
 
 //Person destructor
@@ -26,12 +25,6 @@ Person* Person::getRight() {
 Person* Person::getParent() {
 	return m_parent;
 }
-
-
-colors Person::getColor() {
-	return color;
-}
-
 
 string Person::getFirstName() {
 	return m_fname;
@@ -56,10 +49,11 @@ void Person::setParent(Person* n) {
 	m_parent = n;
 }
 
-void Person::setColor(colors c) {
-	color = c;
-}
-
 void Person::setNumber(string num) {
 	m_phonenumber = num;
+}
+
+void Person::setName(string fname, string lname) {
+	m_fname = fname;
+	m_lname = lname;
 }

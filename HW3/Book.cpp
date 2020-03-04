@@ -111,52 +111,6 @@ vector<string> Book::getAllAscending() {
 	return v;
 }
 
-void Book::insert(string fname, string lname, string number) {
-	Person* n = new Person(fname, lname, number);
-
-	// Update the head Person if the size is 0
-	if (m_size == 0) {
-
-		m_head = n;
-
-		m_size++;
-
-		return;
-	}
-
-	Person* curPerson = m_head;
-	string ourName = lname + ' ' + fname; // combine name like this for alphabetical order
-
-	bool greaterThan;
-	while (curPerson != nullptr) {
-		greaterThan = ourName > curPerson->getLastName() + ' ' + curPerson->getFirstName();
-
-		if (curPerson->getLeft() == nullptr && !greaterThan) {
-			curPerson->setLeft(n);
-			n->setParent(curPerson);
-
-			break;
-		}
-		else if (curPerson->getRight() == nullptr && greaterThan) {
-			curPerson->setRight(n);
-			n->setParent(curPerson);
-
-			break;
-		}
-
-		if (greaterThan) {
-			curPerson = curPerson->getRight();
-		}
-		else {
-			curPerson = curPerson->getLeft();
-		}
-	}
-
-	fixInsertViolation(n);
-
-	m_size++;
-}
-
 Person* Book::getMin(Person* m_head) {
 	while (m_head->getLeft() != nullptr) {
 		return getMin(m_head->getLeft());
@@ -165,64 +119,83 @@ Person* Book::getMin(Person* m_head) {
 	return m_head;
 }
 
-void Book::transplant(Person* one, Person* two) {
-	if (one->getParent() == nullptr) {
-		m_head = two;
-	}
-	else if (one == one->getParent()->getLeft()) {
-		one->getParent()->setLeft(two);
-	}
-	else {
-		one->getParent()->setRight(two);
-	}
+void Book::insert(string fname, string lname, string number) {
+	Person* n = new Person(fname, lname, number);
 
-	if (two != nullptr) {
-		two->setParent(one->getParent());
-	}
-}
+	// Update the head node if the size is 0
+	if (m_size == 0) {
 
-// TODO
-void Book::remove(string fname, string lname) {
-	Person* node = find(m_head, fname, lname);
+		m_head = n;
+		m_size++;
 
-	if (node == nullptr) {
 		return;
 	}
 
-	Person* x;
-	Person* y;
+	Person* curNode = m_head;
+	string targetVal = n->getLastName() + " " + n->getFirstName();
 
-	y = node;
-	bool yColor = y->getColor();
+	bool greaterThan;
+	string curVal;
+	while (curNode != nullptr) {
+		curVal = curNode->getLastName() + " " + curNode->getFirstName();
+		greaterThan = targetVal > curVal;
 
-	if (node->getLeft() == nullptr) {
-		x = node->getRight();
-		transplant(node, node->getRight());
-	} else if (node->getRight() == nullptr) {
-		x = node->getLeft();
-		transplant(node, node->getLeft());
-	} else {
-		y = getMin(node->getRight());
-		yColor = y->getColor();
+		if (curNode->getLeft() == nullptr && !greaterThan) {
+			curNode->setLeft(n);
 
-		x = y->getRight();
-		if (y->getParent() == node) {
-			x->setParent(y);
-		} else {
-			transplant(y, y->getRight());
-			y->setRight(node->getRight());
-			y->getRight()->setParent(y);
+			break;
+		} else if (curNode->getRight() == nullptr && greaterThan) {
+			curNode->setRight(n);
+
+			break;
 		}
 
-		transplant(node, y);
-		y->setLeft(node->getLeft());
-		y->getLeft()->setParent(y);
-		y->setColor(node->getColor());
+		if (greaterThan) {
+			curNode = curNode->getRight();
+		} else {
+			curNode = curNode->getLeft();
+		}
 	}
 
-	if (yColor == colors::BLACK) {
-		fixDeleteViolation(x); //colors::RED_colors::BLACK_delete_fixup
+	m_size++;
+}
+
+void Book::remove(string fname, string lname) {
+	Person* root = find(m_head, fname, lname);
+
+	remove(m_head, fname, lname);
+}
+
+Person* Book::remove(Person* root, string fname, string lname) {
+	if (root == nullptr) {
+		return root;
 	}
+
+	string targetVal = lname + " " + fname;
+	string rootVal = root->getLastName() + " " + root->getFirstName();
+
+	if (targetVal > rootVal) {
+		root->setRight(remove(root->getRight(), fname, lname));
+	} else if (targetVal < rootVal) {
+		root->setLeft(remove(root->getLeft(), fname, lname));
+	} else {
+		if (root->getLeft() == nullptr) {
+			Person* t = root->getRight();
+			delete root;
+			return t;
+		} else if (root->getRight() == nullptr) {
+			Person* t = root->getLeft();
+			delete root;
+			return t;
+		}
+
+		Person* t = getMin(root->getRight());
+		root->setName(t->getFirstName(), t->getLastName());
+		root->setNumber(t->getNumber());
+		root->setRight(remove(root->getRight(), fname, lname));
+	} 
+
+	return root;
 }
 
 Person* Book::find(Person* m_head, string fname, string lname) {
@@ -255,190 +228,6 @@ string Book::findNumber(string fname, string lname) {
 	return target != nullptr ? target->getNumber() : "";
 }
 
-void Book::rotateLeft(Person* pivot) {
-	Person* temp = pivot->getRight();
-
-	if (temp != nullptr)
-		pivot->setRight(temp->getLeft());
-
-	if (temp != nullptr && temp->getLeft() != nullptr) {
-		temp->getLeft()->setParent(pivot);
-	}
-
-	if (temp != nullptr) {
-		temp->setParent(pivot->getParent());
-		temp->setLeft(pivot);
-	}
-
-	if (pivot->getParent() == nullptr) {
-		m_head = temp;
-	}
-	else if (pivot == pivot->getParent()->getLeft()) {
-		pivot->getParent()->setLeft(temp);
-	}
-	else {
-		pivot->getParent()->setRight(temp);
-	}
-
-	pivot->setParent(temp);
-}
-
-void Book::rotateRight(Person* pivot) {
-	Person* temp = pivot->getLeft();
-
-	if (temp != nullptr)
-		pivot->setLeft(temp->getRight());
-
-	if (temp != nullptr && temp->getRight() != nullptr) {
-		temp->getRight()->setParent(temp);
-	}
-
-	if (temp != nullptr) {
-		temp->setParent(pivot->getParent());
-		temp->setRight(pivot);
-	}
-
-	if (pivot->getParent() == nullptr) {
-		m_head = temp;
-	} else if (pivot == pivot->getParent()->getLeft()) {
-		pivot->getParent()->setLeft(temp);
-	} else {
-		pivot->getParent()->setRight(temp);
-	}
-
-	pivot->setParent(temp);
-}
-
-void Book::fixDeleteViolation(Person* node) {
-	Person* w;
-
-	while (node != m_head && node->getColor() == colors::BLACK) {
-
-		if (node == node->getParent()->getLeft()) {
-			w = node->getParent()->getRight();
-
-			if (w->getColor() == colors::RED) {
-				w->setColor(colors::BLACK);
-				node->getParent()->setColor(colors::RED);
-				rotateLeft(node->getParent());
-				w = node->getParent()->getRight();
-			}
-
-			if (w->getLeft()->getColor() == colors::BLACK && w->getRight()->getColor() == colors::BLACK) {
-				w->setColor(colors::RED);
-				node->getParent()->setColor(colors::BLACK);
-				node = node->getParent();
-			}
-			else {
-
-				if (w->getRight()->getColor() == colors::BLACK) {
-					w->setColor(colors::RED);
-					w->getLeft()->setColor(colors::BLACK);
-					rotateRight(w);
-					w = node->getParent()->getRight();
-				}
-
-				w->setColor(node->getParent()->getColor());
-				node->getParent()->setColor(colors::BLACK);
-				node->getRight()->setColor(colors::BLACK);
-				rotateLeft(node->getParent());
-				node = m_head;
-
-			}
-
-		}
-		else {
-			w = node->getParent()->getLeft();
-
-			if (w->getColor() == colors::RED) {
-				w->setColor(colors::BLACK);
-				node->getParent()->setColor(colors::BLACK);
-				rotateRight(node->getParent());
-				w = node->getParent()->getLeft();
-			}
-
-			if (w->getLeft()->getColor() == colors::BLACK && w->getRight()->getColor() == colors::BLACK) {
-				w->setColor(colors::RED);
-				node->getParent()->setColor(colors::BLACK);
-				node = node->getParent();
-			}
-			else {
-
-				if (w->getLeft()->getColor() == colors::BLACK) {
-					w->setColor(colors::RED);
-					w->getRight()->setColor(colors::BLACK);
-					rotateLeft(w);
-					w = node->getParent()->getLeft();
-				}
-
-				w->setColor(node->getParent()->getColor());
-				node->getParent()->setColor(colors::BLACK);
-				w->getLeft()->setColor(colors::BLACK);
-				rotateRight(node->getParent());
-				node = m_head;
-
-			}
-		}
-
-	}
-
-	node->setColor(colors::BLACK);
-}
-
-void Book::fixInsertViolation(Person* pivot) {
-	bool left;
-	Person* uncle = nullptr;
-	Person* grandparent = nullptr;
-	Person* t;
-
-	if (pivot->getParent() != nullptr && pivot->getParent()->getParent() != nullptr) {
-		grandparent = pivot->getParent()->getParent();
-
-		uncle = (grandparent->getLeft() == pivot->getParent()) ? grandparent->getRight() : grandparent->getLeft();
-	}
-
-	if (pivot->getParent() == nullptr) {
-		// Case 1
-
-		pivot->setColor(colors::BLACK);
-	} else if (pivot->getParent()->getColor() == colors::BLACK) {
-		// case 2
-
-		return;
-	} else if (uncle != nullptr && uncle->getColor() == colors::RED) {
-		// case 3
-
-		pivot->getParent()->setColor(colors::BLACK);
-		uncle->setColor(colors::BLACK);
-		grandparent->setColor(colors::RED);
-
-		fixInsertViolation(grandparent);
-	} else {
-		// case 4
-
-		if (grandparent != nullptr && grandparent->getLeft() != nullptr && pivot == grandparent->getLeft()->getRight()) {
-			rotateLeft(pivot->getParent());
-			pivot = pivot->getLeft();
-		}
-		else if (grandparent != nullptr && grandparent->getRight() != nullptr && pivot == grandparent->getRight()->getLeft()) {
-			rotateRight(pivot->getParent());
-			pivot = pivot->getRight();
-		}
-
-		if (grandparent != nullptr && pivot == pivot->getParent()->getLeft()) {
-			rotateRight(grandparent);
-		}
-		else {
-			if (grandparent != nullptr) {
-				rotateLeft(grandparent);
-				grandparent->setColor(colors::RED);
-			}
-
-			pivot->getParent()->setColor(colors::BLACK);
-		}
-	}
-}
-
 void Book::inorder(vector<string>* members, Person* p) {
 	if (p == nullptr) {
 		return;
@@ -454,7 +243,6 @@ void Book::inorder(vector<string>* members, Person* p) {
 
 	// Then recursively do the right
 	inorder(members, p->getRight());
-
 }
 
 void Book::preorder(vector<string>* members, Person* p) {

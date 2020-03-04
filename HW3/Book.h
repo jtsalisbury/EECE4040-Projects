@@ -18,13 +18,7 @@ class Book {
 
 	Person* find(Person* root, string fname, string lname);
 
-	void rotateLeft(Person* pivot);
-	void rotateRight(Person* pivot);
-
 	Person* getMin(Person* root);
-	void transplant(Person* one, Person* two);
-	void fixInsertViolation(Person* n);
-	void fixDeleteViolation(Person* n);
 
 	void inorder(std::vector<string>* members, Person* c);
 	void preorder(std::vector<string>* members, Person* c);
@@ -44,6 +38,7 @@ public:
 
 	void insert(string fname, string lname, string number);
 	void remove(string fname, string lname);
+	Person* remove(Person* root, string fname, string lname);
 	void change(string fname, string lname, string newNumber);
 	void saveTree(string path);
 
