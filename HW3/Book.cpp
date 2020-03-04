@@ -1,6 +1,6 @@
 #include "Book.h"
 
-//initializing 
+//initializing everything  
 Book::Book() {
 	m_size = 0;
 }
@@ -104,7 +104,7 @@ void Book::EmptyTree(Person* p) {
 	delete p;
 }
 
-//implemenetation of get all ascending of a tree, returns the list in alphbetatical order 
+//implementation of get all ascending of a tree, returns the list in alphbetatical order 
 vector<string> Book::getAllAscending() {
 	vector<string> v;
 
@@ -117,6 +117,7 @@ vector<string> Book::getAllAscending() {
 	return v;
 }
 
+//implements min value in a tree
 Person* Book::getMin(Person* m_head) {
 	while (m_head->getLeft() != nullptr) {
 		return getMin(m_head->getLeft());
@@ -184,6 +185,7 @@ Person* Book::remove(Person* root, string fname, string lname) {
 	string targetVal = lname + " " + fname;
 	string rootVal = root->getLastName() + " " + root->getFirstName();
 
+	//checks to see if node is a leaf, parent, or root 
 	if (targetVal > rootVal) {
 		root->setRight(remove(root->getRight(), fname, lname));
 	} else if (targetVal < rootVal) {
