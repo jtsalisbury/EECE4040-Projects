@@ -1,5 +1,6 @@
 #include "Book.h"
 
+//initializing 
 Book::Book() {
 	m_size = 0;
 }
@@ -18,6 +19,7 @@ int Book::size() {
 	return m_size;
 }
 
+//splits a vector string into words based on spaces
 vector<string> split(string s) {
 	vector<string> words;
 	string word = "";
@@ -36,6 +38,7 @@ vector<string> split(string s) {
 	return words;
 }
 
+//implemention of restoring a tree from a file
 void Book::restoreTree(string path) {
 	string info; 
 
@@ -56,6 +59,7 @@ void Book::restoreTree(string path) {
 	input.close();
 }
 
+//implementing the save tree function 
 void Book::saveTree(string path) {
 	ofstream output;
 
@@ -74,6 +78,7 @@ void Book::saveTree(string path) {
 	output.close();
 }
 
+//create an empty tree
 void Book::EmptyTree() {
 	if (m_size == 0) {
 		return;
@@ -99,6 +104,7 @@ void Book::EmptyTree(Person* p) {
 	delete p;
 }
 
+//implemenetation of get all ascending of a tree, returns the list in alphbetatical order 
 vector<string> Book::getAllAscending() {
 	vector<string> v;
 
@@ -119,6 +125,7 @@ Person* Book::getMin(Person* m_head) {
 	return m_head;
 }
 
+//implement insert into a tree
 void Book::insert(string fname, string lname, string number) {
 	Person* n = new Person(fname, lname, number);
 
@@ -160,12 +167,15 @@ void Book::insert(string fname, string lname, string number) {
 	m_size++;
 }
 
+
+//remove helper function 
 void Book::remove(string fname, string lname) {
 	Person* root = find(m_head, fname, lname);
 
 	remove(m_head, fname, lname);
 }
 
+//implemention of remove
 Person* Book::remove(Person* root, string fname, string lname) {
 	if (root == nullptr) {
 		return root;
@@ -198,6 +208,7 @@ Person* Book::remove(Person* root, string fname, string lname) {
 	return root;
 }
 
+//implemenetation of find function
 Person* Book::find(Person* m_head, string fname, string lname) {
 	string targetName = lname + ' ' + fname;
 
@@ -212,6 +223,7 @@ Person* Book::find(Person* m_head, string fname, string lname) {
 	return find(m_head->getLeft(), fname, lname);
 }
 
+//change entry 
 void Book::change(string fname, string lname, string number) {
 	Person* target = find(m_head, fname, lname);
 
@@ -222,6 +234,7 @@ void Book::change(string fname, string lname, string number) {
 	target->setNumber(number);
 }
 
+//find a contact via a number
 string Book::findNumber(string fname, string lname) {
 	Person* target = find(m_head, fname, lname);
 
