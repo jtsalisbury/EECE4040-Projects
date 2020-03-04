@@ -1,11 +1,6 @@
 #include "Book.h"
 
-enum colors {
-	RED,
-	BLACK
-};
-
-
+//initializing everything  
 Book::Book() {
 	m_size = 0;
 }
@@ -24,14 +19,66 @@ int Book::size() {
 	return m_size;
 }
 
+//splits a vector string into words based on spaces
+vector<string> split(string s) {
+	vector<string> words;
+	string word = "";
+
+	for (int i = 0; i < s.length(); i++) {
+		if (s[i] == ' ') {
+			words.push_back(word);
+			word = "";
+		} else {
+			word += s[i];
+		}
+	}
+
+	words.push_back(word);
+
+	return words;
+}
+
+//implemention of restoring a tree from a file
 void Book::restoreTree(string path) {
+	string info; 
 
+	ifstream input(path);
+
+	if (!input.is_open()) {
+		cout << "Unable to open file" << endl;
+		return;
+	}
+
+	while (getline(input, info)) {
+		istringstream iss(info);
+		vector<string> words = split(info);
+
+		insert(words[0], words[1], words[2]);
+	}
+
+	input.close();
 }
 
+//implementing the save tree function 
 void Book::saveTree(string path) {
+	ofstream output;
 
+	output.open(path);
+	if (!output) {
+		return;
+	}
+
+	vector<string> members;
+	preorder(&members, m_head);
+
+	for (int i = 0; i < members.size(); i++) {
+		output << members[i] << endl;
+	}
+
+	output.close();
 }
 
+//create an empty tree
 void Book::EmptyTree() {
 	if (m_size == 0) {
 		return;
@@ -57,6 +104,7 @@ void Book::EmptyTree(Person* p) {
 	delete p;
 }
 
+//implementation of get all ascending of a tree, returns the list in alphbetatical order 
 vector<string> Book::getAllAscending() {
 	vector<string> v;
 
@@ -69,71 +117,115 @@ vector<string> Book::getAllAscending() {
 	return v;
 }
 
+//implements min value in a tree
+Person* Book::getMin(Person* m_head) {
+	while (m_head->getLeft() != nullptr) {
+		return getMin(m_head->getLeft());
+	}
+
+	return m_head;
+}
+
+//implement insert into a tree
 void Book::insert(string fname, string lname, string number) {
 	Person* n = new Person(fname, lname, number);
 
-	// Update the head Person if the size is 0
+	// Update the head node if the size is 0
 	if (m_size == 0) {
 
 		m_head = n;
-
 		m_size++;
 
 		return;
 	}
 
-	Person* curPerson = m_head;
-	string ourName = lname + ' ' + fname; // combine name like this for alphabetical order
+	Person* curNode = m_head;
+	string targetVal = n->getLastName() + " " + n->getFirstName();
 
 	bool greaterThan;
-	while (curPerson != nullptr) {
-		greaterThan = ourName > curPerson->getLastName() + ' ' + curPerson->getFirstName();
+	string curVal;
+	while (curNode != nullptr) {
+		curVal = curNode->getLastName() + " " + curNode->getFirstName();
+		greaterThan = targetVal > curVal;
 
-		if (curPerson->getLeft() == nullptr && !greaterThan) {
-			curPerson->setLeft(n);
-			n->setParent(curPerson);
+		if (curNode->getLeft() == nullptr && !greaterThan) {
+			curNode->setLeft(n);
 
 			break;
-		}
-		else if (curPerson->getRight() == nullptr && greaterThan) {
-			curPerson->setRight(n);
-			n->setParent(curPerson);
+		} else if (curNode->getRight() == nullptr && greaterThan) {
+			curNode->setRight(n);
 
 			break;
 		}
 
 		if (greaterThan) {
-			curPerson = curPerson->getRight();
-		}
-		else {
-			curPerson = curPerson->getLeft();
+			curNode = curNode->getRight();
+		} else {
+			curNode = curNode->getLeft();
 		}
 	}
-
-	fixViolation(n);
 
 	m_size++;
 }
 
-// TODO
-void Book::remove(string fname, string lname) {
 
+//remove helper function 
+void Book::remove(string fname, string lname) {
+	Person* root = find(m_head, fname, lname);
+
+	remove(m_head, fname, lname);
 }
 
-Person* Book::find(Person* root, string fname, string lname) {
-	string targetName = lname + ' ' + fname;
-
-	if (root == nullptr || root->getLastName() + ' ' + root->getFirstName() == targetName) {
+//implemention of remove
+Person* Book::remove(Person* root, string fname, string lname) {
+	if (root == nullptr) {
 		return root;
 	}
 
-	if (root->getLastName() + ' ' + root->getFirstName() < targetName) {
-		return find(root->getRight(), fname, lname);
-	}
+	string targetVal = lname + " " + fname;
+	string rootVal = root->getLastName() + " " + root->getFirstName();
 
-	return find(root->getLeft(), fname, lname);
+	//checks to see if node is a leaf, parent, or root 
+	if (targetVal > rootVal) {
+		root->setRight(remove(root->getRight(), fname, lname));
+	} else if (targetVal < rootVal) {
+		root->setLeft(remove(root->getLeft(), fname, lname));
+	} else {
+		if (root->getLeft() == nullptr) {
+			Person* t = root->getRight();
+			delete root;
+			return t;
+		} else if (root->getRight() == nullptr) {
+			Person* t = root->getLeft();
+			delete root;
+			return t;
+		}
+
+		Person* t = getMin(root->getRight());
+		root->setName(t->getFirstName(), t->getLastName());
+		root->setNumber(t->getNumber());
+		root->setRight(remove(root->getRight(), fname, lname));
+	} 
+
+	return root;
 }
 
+//implemenetation of find function
+Person* Book::find(Person* m_head, string fname, string lname) {
+	string targetName = lname + ' ' + fname;
+
+	if (m_head == nullptr || m_head->getLastName() + ' ' + m_head->getFirstName() == targetName) {
+		return m_head;
+	}
+
+	if (m_head->getLastName() + ' ' + m_head->getFirstName() < targetName) {
+		return find(m_head->getRight(), fname, lname);
+	}
+
+	return find(m_head->getLeft(), fname, lname);
+}
+
+//change entry 
 void Book::change(string fname, string lname, string number) {
 	Person* target = find(m_head, fname, lname);
 
@@ -144,124 +236,14 @@ void Book::change(string fname, string lname, string number) {
 	target->setNumber(number);
 }
 
+//find a contact via a number
 string Book::findNumber(string fname, string lname) {
 	Person* target = find(m_head, fname, lname);
 
 	return target != nullptr ? target->getNumber() : "";
 }
 
-void Book::rotateLeft(Person* pivot) {
-	Person* temp = pivot->getRight();
-
-	if (temp != nullptr)
-		pivot->setRight(temp->getLeft());
-
-	if (temp != nullptr && temp->getLeft() != nullptr) {
-		temp->getLeft()->setParent(pivot);
-	}
-
-	if (temp != nullptr) {
-		temp->setParent(pivot->getParent());
-		temp->setLeft(pivot);
-	}
-
-	if (pivot->getParent() == nullptr) {
-		m_head = temp;
-	}
-	else if (pivot == pivot->getParent()->getLeft()) {
-		pivot->getParent()->setLeft(temp);
-	}
-	else {
-		pivot->getParent()->setRight(temp);
-	}
-
-	pivot->setParent(temp);
-}
-
-void Book::rotateRight(Person* pivot) {
-	Person* temp = pivot->getLeft();
-
-	if (temp != nullptr)
-		pivot->setLeft(temp->getRight());
-
-	if (temp != nullptr && temp->getRight() != nullptr) {
-		temp->getRight()->setParent(temp);
-	}
-
-	if (temp != nullptr) {
-		temp->setParent(pivot->getParent());
-		temp->setRight(pivot);
-	}
-
-	if (pivot->getParent() == nullptr) {
-		m_head = temp;
-	}
-	else if (pivot == pivot->getParent()->getLeft()) {
-		pivot->getParent()->setLeft(temp);
-	}
-	else {
-		pivot->getParent()->setRight(temp);
-	}
-
-	pivot->setParent(temp);
-}
-
-void Book::fixViolation(Person* pivot) {
-	bool left;
-	Person* uncle = nullptr;
-	Person* grandparent = nullptr;
-	Person* t;
-
-	if (pivot->getParent() != nullptr && pivot->getParent()->getParent() != nullptr) {
-		grandparent = pivot->getParent()->getParent();
-
-		uncle = (grandparent->getLeft() == pivot->getParent()) ? grandparent->getRight() : grandparent->getLeft();
-	}
-
-	if (pivot->getParent() == nullptr) {
-		// Case 1
-
-		pivot->setColor(BLACK);
-	} else if (pivot->getParent()->getColor() == BLACK) {
-		// case 2
-
-		return;
-	} else if (uncle != nullptr && uncle->getColor() == RED) {
-		// case 3
-
-		pivot->getParent()->setColor(BLACK);
-		uncle->setColor(BLACK);
-		grandparent->setColor(RED);
-
-		fixViolation(grandparent);
-	} else {
-		// case 4
-
-		if (grandparent != nullptr && grandparent->getLeft() != nullptr && pivot == grandparent->getLeft()->getRight()) {
-			rotateLeft(pivot->getParent());
-			pivot = pivot->getLeft();
-		}
-		else if (grandparent != nullptr && grandparent->getRight() != nullptr && pivot == grandparent->getRight()->getLeft()) {
-			rotateRight(pivot->getParent());
-			pivot = pivot->getRight();
-		}
-
-		if (grandparent != nullptr && pivot == pivot->getParent()->getLeft()) {
-			rotateRight(grandparent);
-		}
-		else {
-			if (grandparent != nullptr) {
-				rotateLeft(grandparent);
-				grandparent->setColor(RED);
-			}
-
-			pivot->getParent()->setColor(BLACK);
-		}
-	}
-}
-
 void Book::inorder(vector<string>* members, Person* p) {
-
 	if (p == nullptr) {
 		return;
 	}
@@ -272,28 +254,26 @@ void Book::inorder(vector<string>* members, Person* p) {
 	// Then the current
 	string current;
 	current = (p->getFirstName() + " " + p->getLastName() + " " + p->getNumber());
+	members->push_back(current);
 
 	// Then recursively do the right
 	inorder(members, p->getRight());
-
 }
 
 void Book::preorder(vector<string>* members, Person* p) {
-
 	if (p == nullptr) {
 		return;
 	}
 
-
 	// Then the current
 	string current;
 	current = (p->getFirstName() + " " + p->getLastName() + " " + p->getNumber());
+	members->push_back(current);
 
 	// Recursively do the left
 	preorder(members, p->getLeft());
 
 	// Then recursively do the right
 	preorder(members, p->getRight());
-
 
 }
