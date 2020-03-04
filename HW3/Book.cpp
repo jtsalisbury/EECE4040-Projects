@@ -1,11 +1,5 @@
 #include "Book.h"
 
-enum colors {
-	RED,
-	BLACK
-};
-
-
 Book::Book() {
 	m_size = 0;
 }
@@ -226,8 +220,8 @@ void Book::remove(string fname, string lname) {
 		y->setColor(node->getColor());
 	}
 
-	if (yColor == BLACK) {
-		fixDeleteViolation(x); //red_black_delete_fixup
+	if (yColor == colors::BLACK) {
+		fixDeleteViolation(x); //colors::RED_colors::BLACK_delete_fixup
 	}
 }
 
@@ -318,35 +312,35 @@ void Book::rotateRight(Person* pivot) {
 void Book::fixDeleteViolation(Person* node) {
 	Person* w;
 
-	while (node != m_head && node->getColor() == BLACK) {
+	while (node != m_head && node->getColor() == colors::BLACK) {
 
 		if (node == node->getParent()->getLeft()) {
 			w = node->getParent()->getRight();
 
-			if (w->getColor() == RED) {
-				w->setColor(BLACK);
-				node->getParent()->setColor(RED);
+			if (w->getColor() == colors::RED) {
+				w->setColor(colors::BLACK);
+				node->getParent()->setColor(colors::RED);
 				rotateLeft(node->getParent());
 				w = node->getParent()->getRight();
 			}
 
-			if (w->getLeft()->getColor() == BLACK && w->getRight()->getColor() == BLACK) {
-				w->setColor(RED);
-				node->getParent()->setColor(BLACK);
+			if (w->getLeft()->getColor() == colors::BLACK && w->getRight()->getColor() == colors::BLACK) {
+				w->setColor(colors::RED);
+				node->getParent()->setColor(colors::BLACK);
 				node = node->getParent();
 			}
 			else {
 
-				if (w->getRight()->getColor() == BLACK) {
-					w->setColor(RED);
-					w->getLeft()->setColor(BLACK);
+				if (w->getRight()->getColor() == colors::BLACK) {
+					w->setColor(colors::RED);
+					w->getLeft()->setColor(colors::BLACK);
 					rotateRight(w);
 					w = node->getParent()->getRight();
 				}
 
 				w->setColor(node->getParent()->getColor());
-				node->getParent()->setColor(BLACK);
-				node->getRight()->setColor(BLACK);
+				node->getParent()->setColor(colors::BLACK);
+				node->getRight()->setColor(colors::BLACK);
 				rotateLeft(node->getParent());
 				node = m_head;
 
@@ -356,30 +350,30 @@ void Book::fixDeleteViolation(Person* node) {
 		else {
 			w = node->getParent()->getLeft();
 
-			if (w->getColor() == RED) {
-				w->setColor(BLACK);
-				node->getParent()->setColor(BLACK);
+			if (w->getColor() == colors::RED) {
+				w->setColor(colors::BLACK);
+				node->getParent()->setColor(colors::BLACK);
 				rotateRight(node->getParent());
 				w = node->getParent()->getLeft();
 			}
 
-			if (w->getLeft()->getColor() == BLACK && w->getRight()->getColor() == BLACK) {
-				w->setColor(RED);
-				node->getParent()->setColor(BLACK);
+			if (w->getLeft()->getColor() == colors::BLACK && w->getRight()->getColor() == colors::BLACK) {
+				w->setColor(colors::RED);
+				node->getParent()->setColor(colors::BLACK);
 				node = node->getParent();
 			}
 			else {
 
-				if (w->getLeft()->getColor() == BLACK) {
-					w->setColor(RED);
-					w->getRight()->setColor(BLACK);
+				if (w->getLeft()->getColor() == colors::BLACK) {
+					w->setColor(colors::RED);
+					w->getRight()->setColor(colors::BLACK);
 					rotateLeft(w);
 					w = node->getParent()->getLeft();
 				}
 
 				w->setColor(node->getParent()->getColor());
-				node->getParent()->setColor(BLACK);
-				w->getLeft()->setColor(BLACK);
+				node->getParent()->setColor(colors::BLACK);
+				w->getLeft()->setColor(colors::BLACK);
 				rotateRight(node->getParent());
 				node = m_head;
 
@@ -388,7 +382,7 @@ void Book::fixDeleteViolation(Person* node) {
 
 	}
 
-	node->setColor(BLACK);
+	node->setColor(colors::BLACK);
 }
 
 void Book::fixInsertViolation(Person* pivot) {
@@ -406,17 +400,17 @@ void Book::fixInsertViolation(Person* pivot) {
 	if (pivot->getParent() == nullptr) {
 		// Case 1
 
-		pivot->setColor(BLACK);
-	} else if (pivot->getParent()->getColor() == BLACK) {
+		pivot->setColor(colors::BLACK);
+	} else if (pivot->getParent()->getColor() == colors::BLACK) {
 		// case 2
 
 		return;
-	} else if (uncle != nullptr && uncle->getColor() == RED) {
+	} else if (uncle != nullptr && uncle->getColor() == colors::RED) {
 		// case 3
 
-		pivot->getParent()->setColor(BLACK);
-		uncle->setColor(BLACK);
-		grandparent->setColor(RED);
+		pivot->getParent()->setColor(colors::BLACK);
+		uncle->setColor(colors::BLACK);
+		grandparent->setColor(colors::RED);
 
 		fixInsertViolation(grandparent);
 	} else {
@@ -437,10 +431,10 @@ void Book::fixInsertViolation(Person* pivot) {
 		else {
 			if (grandparent != nullptr) {
 				rotateLeft(grandparent);
-				grandparent->setColor(RED);
+				grandparent->setColor(colors::RED);
 			}
 
-			pivot->getParent()->setColor(BLACK);
+			pivot->getParent()->setColor(colors::BLACK);
 		}
 	}
 }

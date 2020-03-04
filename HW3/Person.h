@@ -3,12 +3,17 @@
 
 using namespace std;
 
+enum colors {
+	RED = false,
+	BLACK = true
+};
+
 class Person {
 	Person* m_left = nullptr;
 	Person* m_right = nullptr;
 	Person* m_parent = nullptr;
 
-	bool color;
+	colors color;
 
 	std::string m_fname;
 	std::string m_lname;
@@ -22,7 +27,7 @@ public:
 	Person* getRight();
 	Person* getParent();
 
-	bool getColor();
+	colors getColor();
 
 	std::string getFirstName();
 	std::string getLastName();
@@ -31,7 +36,7 @@ public:
 	void setLeft(Person* p);
 	void setRight(Person* p);
 	void setParent(Person* p);
-	void setColor(bool c);
+	void setColor(colors c);
 	void setNumber(string n);
 };
 

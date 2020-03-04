@@ -1,11 +1,6 @@
 #include "Person.h"
 #include <iostream>
 
-enum colors {
-	RED,
-	BLACK
-};
-
 //Person Constructor
 Person::Person(string fname, string lname, string phonenumber) {
 	m_fname = fname;
@@ -33,7 +28,7 @@ Person* Person::getParent() {
 }
 
 
-bool Person::getColor() {
+colors Person::getColor() {
 	return color;
 }
 
@@ -61,7 +56,7 @@ void Person::setParent(Person* n) {
 	m_parent = n;
 }
 
-void Person::setColor(bool c) {
+void Person::setColor(colors c) {
 	color = c;
 }
 
