@@ -141,11 +141,19 @@ void Book::insert(string fname, string lname, string number) {
 
 	Person* curNode = m_head;
 	string targetVal = n->getLastName() + " " + n->getFirstName();
+	for (int i = 0; i < targetVal.length(); i++) {
+		targetVal[i] = tolower(targetVal[i]);
+	}
 
 	bool greaterThan;
 	string curVal;
 	while (curNode != nullptr) {
 		curVal = curNode->getLastName() + " " + curNode->getFirstName();
+
+		for (int i = 0; i < curVal.length(); i++) {
+			curVal[i] = tolower(curVal[i]);
+		}
+
 		greaterThan = targetVal > curVal;
 
 		if (curNode->getLeft() == nullptr && !greaterThan) {

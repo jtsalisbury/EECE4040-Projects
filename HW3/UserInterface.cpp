@@ -69,7 +69,7 @@ void UserInterface::executeOption(Book* book, int option) {
 			break;
 		case 5: // Get all the members of the phonebook and print them out in ascending order
 			members = book->getAllAscending();
-			cout << endl << "Phonebook Members:" << endl;
+			cout << endl << "First Name | Last Name | Phone Number" << endl;
 			for (int i = 0; i < members.size(); i++) {
 				cout << members[i] << endl;
 			}
