@@ -10,10 +10,10 @@ private:
 	string m_value;
 	Node* m_next;
 
+public:
 	Node(string);
 	~Node();
 
-public:
 	string getValue();
 	Node* getNext();
 	int getLabel();
@@ -24,13 +24,16 @@ public:
 
 class Digraph {
 private:
-	vector<Node*> headers;
+	vector<Node*> m_headers;
+
+public:
 	Digraph();
 	~Digraph();
 
-public:
-	void addEdge(int, int);
+	void addVertex(string);
+	bool addEdge(int, int);
 	void removeEdge(int, int);
+	bool hasEdge(int, int);
 	void sort();
 	bool checkAcyclic();
 };
