@@ -147,7 +147,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Classes.cpp" />
     <ClCompile Include="HW4.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Classes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -32,9 +33,9 @@ public:
 
 	void addVertex(string);
 	bool addEdge(int, int);
-	void removeEdge(int, int);
+	bool removeEdge(int, int);
 	bool hasEdge(int, int);
-	void sort();
+	Node* sort();
 	bool checkAcyclic();
 };
 

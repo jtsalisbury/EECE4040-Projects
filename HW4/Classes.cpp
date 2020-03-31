@@ -27,6 +27,7 @@ void Node::setNext(Node* next) {
 	m_next = next;
 }
 
+
 Digraph::Digraph() { }
 Digraph::~Digraph() {
 	Node* current;
@@ -107,6 +108,10 @@ bool Digraph::removeEdge(int from, int to) {
 
 	string targetValue = m_headers[to]->getValue();
 
+	if (current->getNext() == nullptr) {
+		return false;
+	}
+
 	while (current->getNext() != nullptr) {
 		Node* next = current->getNext();
 
@@ -126,8 +131,48 @@ bool Digraph::removeEdge(int from, int to) {
 	return true;
 }
 
-void Digraph::sort() {
+void sortUtil(map<string, int> *mark, int *counter, Node *head, Node* v) {
+	(*mark)[v->getValue()] = 1;
 
+	Node* w;
+	while (v->getNext() != nullptr) {
+		w = v->getNext();
+
+		if ((*mark)[w->getValue()] == 0) {
+			sortUtil(mark, counter, head, w);
+		}
+
+		if (head == nullptr) {
+			head = new Node(v->getValue());
+		} else {
+			Node* prev = new Node(v->getValue());
+			prev->setNext(head);
+			head = prev;
+		}
+
+		v = w;
+	}
+}
+
+Node* Digraph::sort() {
+	map<string, int> mark;
+	int counter = m_headers.size() - 1;
+	Node* m_head = nullptr;
+
+	// init all values to zero
+	for (int i = 0; i < m_headers.size(); i++) {
+		mark[m_headers[i]->getValue()] = 0;
+	}
+
+	for (int i = 0; i < m_headers.size(); i++) {
+		string val = m_headers[i]->getValue();
+
+		if (mark[val] == 0) {
+			sortUtil(&mark, &counter, m_head, m_headers[i]);
+		}
+	}
+
+	return head;
 }
 
 bool Digraph::checkAcyclic() {
