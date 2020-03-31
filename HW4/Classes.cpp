@@ -172,7 +172,7 @@ Node* Digraph::sort() {
 		}
 	}
 
-	return head;
+	return m_head;
 }
 
 bool Digraph::checkAcyclic() {
