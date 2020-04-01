@@ -1,5 +1,7 @@
 // HW4.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
+// Group #5
+// Members: John (JT) Salisbury, Caroline Northrop, Sydney O'Connor
 
 #include <iostream>
 #include <string>
